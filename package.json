@@ -1,0 +1,48 @@
+{
+  "name": "dsh-desk-pet-plugin",
+  "version": "1.4.3",
+  "description": "Floating desk pet for DeepSeek Harness: a screen-level animated pet that mirrors live session status, jumps to the session on click, and installs pets from petdex.dev.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "docs/pet.png",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "dsh": ">=0.2.1-rc.5"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "desk-pet",
+    "pet",
+    "桌宠",
+    "overlay",
+    "always-on-top"
+  ],
+  "author": "ZGJ <zg.jun@qq.com>",
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}
