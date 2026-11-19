@@ -1,12 +1,15 @@
-# dsh-desk-pet
+# dsh-desk-pet-plugin
 
 [![npm](https://img.shields.io/npm/v/dsh-desk-pet-plugin.svg)](https://www.npmjs.com/package/dsh-desk-pet-plugin)
+[![github](https://img.shields.io/badge/github-zg--jun%2Fdsh--desk--pet--plugin-181717?logo=github)](https://github.com/zg-jun/dsh-desk-pet-plugin)
 [![license](https://img.shields.io/npm/l/dsh-desk-pet-plugin.svg)](./LICENSE)
 
 一只悬浮在屏幕上的桌宠插件，为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 而生。
 A floating desk pet for DeepSeek Harness.
 
-![preview](docs/pet.png)
+当前版本：**2.0.0**
+
+![preview](docs/pet.jpg)
 
 ---
 
@@ -77,7 +80,7 @@ dsh plugin --profile <你的profile> add dsh-desk-pet-plugin
 | 位置 / 目标 | 内容 |
 |---|---|
 | `~/.petdex/pets/` | 已安装的宠物素材（与 petdex CLI 同目录结构） |
-| `~/.petdex/dsh-float/` | 运行时、窗口位置 `pos.json`、子进程 pid |
+| `~/.petdex/dsh-float/` | 共享 runtime；`instances/<profile>/` 下为位置 `pos.json`、pid、`settings.json`、userData |
 | `petdex.dev` / `assets.petdex.dev` | 只在打开图鉴、搜索、安装宠物时访问（由宿主代理，不受页面 CSP 限制） |
 | `registry.npmmirror.com` | 仅首次下载 Electron 运行时 |
 
@@ -177,8 +180,9 @@ Override the binary with `DESK_PET_ELECTRON=/path/to/Electron`.
 
 ### Data
 
-`~/.petdex/pets/` holds installed pet assets, `~/.petdex/dsh-float/` holds the
-runtime, window position and child pid. Network access happens only when you
+`~/.petdex/pets/` holds installed pet assets. `~/.petdex/dsh-float/` holds the
+shared runtime plus `instances/<profile>/` (position, pid, settings, userData),
+so two DSH profiles never share a pet or overwrite each other's switch. Network access happens only when you
 open the catalog, search, or install a pet (proxied through the Host so the page
 CSP never applies), plus the one-time runtime download.
 
@@ -186,6 +190,20 @@ CSP never applies), plus the one-time runtime download.
 
 macOS is fully verified (Retina, multi-display hot-plug, above full-screen
 apps, Dock hidden); Windows and Linux paths exist but are untested.
+
+### Development
+
+```bash
+npm install
+npm run build             # dist/{index,client,pet-core}.js + dist/screen/ (generated)
+npm run check             # build + typecheck + tests + parity + debt ratchet
+npm run e2e               # isolated HOME + real Electron host/SSE/security check
+npm run dev:install:apply # copy into the desktop profile, then restart DSH
+```
+
+`dist/` is generated; sources live in `src/`.
+See [docs/architecture.md](docs/architecture.md) and
+[docs/extending.md](docs/extending.md).
 
 ### License
 

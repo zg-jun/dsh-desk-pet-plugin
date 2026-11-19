@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>方案 C6 · 舞台 + 3D 宠物显示区</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ===== 方案 C6：舞台保持原样，宠物显示区做成 3D =====
+   在 C 的基础上只做减法与对齐：
+   1) 舞台放大（268→300），底部动作条右侧放唯一的「添加宠物」入口；
+   2) 切换条头部只保留「宠物池 · 7 只」，不再和舞台抢同一个入口；
+   3) 下方两块等宽等高：外观改成两行「label + 分段」，运行环境一行状态 + 一行路径；
+   4) 去掉页脚提示句与重复的「更换宠物」按钮。 */
+
+.main { position: relative; }
+.wrap { width: 940px; margin: 0 auto; padding: 26px 0 48px; }
+
+/* 舞台即 3D 切换场景：所有宠物站在同一地面上，选中者在中央 */
+.stage {
+  border-radius: 18px; padding: 18px 22px 10px; height: 328px; box-sizing: border-box;
+  background:
+    radial-gradient(120% 85% at 50% -8%, color-mix(in srgb, var(--dsw-alias-label-primary) 10%, transparent), transparent 58%),
+    color-mix(in srgb, var(--dsw-alias-label-primary) 3%, transparent);
+}
+.stage-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 0 2px; }
+.stage-head .who .nm { font-size: 19px; font-weight: 600; letter-spacing: 0.01em; line-height: 1.3; }
+.stage-head .who .meta {
+  display: flex; align-items: center; gap: 7px; margin-top: 5px;
+  font-size: 11.5px; color: var(--dsw-alias-label-secondary);
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--dsw-alias-state-success-primary); flex: none; }
+
+.switch { display: inline-flex; align-items: center; gap: 9px; border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+.switch .lab { font-size: 11.5px; color: var(--dsw-alias-label-secondary); }
+.track { position: relative; width: 34px; height: 20px; border-radius: 999px; flex: none;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 16%, transparent); }
+.track i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--dsw-alias-bg-base); box-shadow: 0 1px 2px rgba(16,16,24,0.22); }
+.track.on { background: var(--dsw-alias-label-primary); }
+.track.on i { left: 16px; }
+
+/* 场景：透视容器，宠物按偏移量排成一条有纵深的队 */
+.scene {
+  position: relative; height: 218px; margin-top: 2px;
+  perspective: 1100px; transform-style: preserve-3d;
+}
+.pet-item {
+  position: absolute; left: 50%; bottom: 4px; width: 190px; height: 205px; margin-left: -95px;
+  transform-origin: 50% 100%;
+  display: flex; align-items: flex-end; justify-content: center;
+  cursor: pointer; will-change: transform, opacity;
+  transition: transform 0.34s cubic-bezier(.22,.61,.36,1), opacity 0.34s ease;
+}
+.scene.dragging .pet-item, .scene.no-anim .pet-item { transition: none; }
+.pet-item .add-tile {
+  width: 138px; height: 138px; border-radius: 24px; box-sizing: border-box;
+  border: 1.5px dashed var(--dsw-alias-border-l3);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  color: var(--dsw-alias-label-tertiary); background: transparent;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+.add-slot:hover .add-tile { border-color: var(--dsw-alias-label-secondary); color: var(--dsw-alias-label-secondary); }
+.add-slot::after { display: none; }
+.add-tile .plus { font-size: 26px; line-height: 1; }
+.add-tile .label { font-size: 11.5px; }
+
+.pet-item .tile-cat {
+  width: 104px; height: 104px; border-radius: 24px; overflow: hidden; display: block;
+  background: #fff4d6;
+  box-shadow: 0 8px 22px -10px rgba(16,16,24,0.45), 0 0 0 1px rgba(16,16,24,0.06);
+}
+.pet-item .tile-cat svg { width: 100%; height: 100%; display: block; }
+.pet-item img, .pet-item > svg {
+  width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none;
+}
+.pet-item::after {
+  content: ''; position: absolute; left: 50%; bottom: -2px; transform: translateX(-50%);
+  width: 62%; height: 12px; border-radius: 50%;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 20%, transparent);
+  filter: blur(6px); opacity: 0.45;
+}
+.pet-item.is-center::after { width: 76%; height: 15px; opacity: 0.95; }
+.pet-item .x {
+  position: absolute; top: 6px; right: 6px; width: 20px; height: 20px; padding: 0;
+  border: 0; border-radius: 50%; background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-secondary); font: inherit; font-size: 10px; line-height: 20px;
+  text-align: center; cursor: pointer; opacity: 0; z-index: 2;
+  border: 1px solid var(--dsw-alias-border-l2);
+  box-shadow: 0 2px 6px -2px rgba(16,16,24,0.28);
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+.pet-item:hover .x, .pet-item:focus-within .x { opacity: 0.9; }
+@media (hover: none) { .pet-item.is-center .x { opacity: 0.6; } }
+.pet-item .x:hover { opacity: 1; color: var(--dsw-alias-label-primary); }
+.pet-item:focus-visible { outline: 2px solid color-mix(in srgb, var(--dsw-alias-label-primary) 45%, transparent); outline-offset: 4px; border-radius: 12px; }
+
+.bar { display: flex; align-items: center; gap: 6px; padding: 0 2px; margin-top: 6px; }
+.chip {
+  height: 26px; padding: 0 11px; border-radius: 999px; display: inline-flex; align-items: center;
+  font-size: 11.5px; color: var(--dsw-alias-label-secondary); cursor: pointer;
+  border: 1px solid transparent; background: color-mix(in srgb, var(--dsw-alias-bg-base) 55%, transparent);
+  backdrop-filter: blur(8px);
+}
+.chip:hover { color: var(--dsw-alias-label-primary); }
+.chip.on { color: var(--dsw-alias-label-primary); border-color: var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-base); }
+.bar .spacer { flex: 1; }
+.add-btn {
+  height: 28px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center;
+  border: 1px solid var(--dsw-alias-border-l1);
+  background: color-mix(in srgb, var(--dsw-alias-bg-base) 88%, transparent);
+  box-shadow: 0 1px 2px rgba(16, 16, 24, 0.06), 0 10px 20px -18px rgba(16, 16, 24, 0.45);
+  font: inherit; font-size: 11.5px; color: var(--dsw-alias-label-primary); cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+}
+.add-btn:hover {
+  background: var(--dsw-alias-bg-base);
+  box-shadow: 0 2px 4px rgba(16, 16, 24, 0.08), 0 12px 24px -18px rgba(16, 16, 24, 0.5);
+}
+.add-btn .plus { font-size: 14px; line-height: 1; opacity: 0.7; }
+.btn.plain { border-color: transparent; background: none; color: var(--dsw-alias-label-secondary); }
+.btn.plain:hover { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
+
+/* 轻卡片 */
+.stack { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+
+.card {
+  border-radius: 12px; padding: 13px 18px 11px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 3.5%, transparent);
+}
+.card-head { display: flex; align-items: baseline; gap: 7px; margin-bottom: 6px; }
+.card-head h3 { font-size: 11.5px; font-weight: 600; margin: 0; }
+.card-head .n { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); }
+.card-head .spacer { flex: 1; }
+.card-head .link { border: 0; background: none; padding: 0; font: inherit; font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary); cursor: pointer; }
+.card-head .link:hover { color: var(--dsw-alias-label-primary); }
+
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pt.on .th { box-shadow: inset 0 0 0 1.5px var(--dsw-alias-label-primary); background: none; }
+.pt.on .nm { color: var(--dsw-alias-label-primary); font-weight: 500; }
+.pt.add .th { border: 1px dashed var(--dsw-alias-border-l2); background: none; color: var(--dsw-alias-label-tertiary); }
+
+.row { display: flex; align-items: center; gap: 12px; justify-content: flex-start; height: 28px; }
+.row + .row { margin-top: 6px; }
+.row .lab { font-size: 12.5px; color: var(--dsw-alias-label-primary); }
+.row .spacer { flex: 1; }
+.seg { margin-left: auto; display: inline-flex; gap: 2px; padding: 2px; border-radius: 8px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 5%, transparent); }
+.seg .s { min-width: 40px; height: 24px; padding: 0 8px; border-radius: 6px; display: flex; align-items: center;
+  justify-content: center; font-size: 11.5px; color: var(--dsw-alias-label-secondary); cursor: pointer; }
+.seg .s.on { background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font-weight: 500;
+  box-shadow: 0 1px 2px rgba(16,16,24,0.1), 0 0 0 1px var(--dsw-alias-border-l2); }
+
+.desc { font-size: 11.5px; line-height: 1.6; color: var(--dsw-alias-label-secondary); margin: 0 0 8px; }
+.row .lab { width: 44px; flex: none; font-size: 12.5px; color: var(--dsw-alias-label-secondary); }
+.row .val { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; }
+.row .sub { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px;
+  border-radius: 999px; font-size: 11.5px;
+  color: var(--dsw-alias-state-success-primary);
+  background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--dsw-alias-state-success-primary) 26%, transparent);
+}
+.pill .d { width: 6px; height: 6px; border-radius: 50%; background: var(--dsw-alias-state-success-primary); }
+.row code {
+  font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--dsw-alias-bg-layer-2); border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 5px; padding: 3px 6px; color: var(--dsw-alias-label-primary);
+}
+.link-btn {
+  border: 0; background: none; padding: 0; font: inherit; font-size: 11.5px; cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
+}
+.link-btn:hover { color: var(--dsw-alias-label-primary); }
+.plus { font-size: 12px; opacity: 0.7; }
+
+/* 抽屉 */
+.scrim { position: absolute; inset: 52px 0 0 0; background: rgba(16, 16, 24, 0.12); }
+.drawer {
+  position: absolute; top: 52px; right: 0; bottom: 0; width: 352px; z-index: 5; overflow: hidden;
+  background: var(--dsw-alias-bg-base); border-left: 1px solid var(--dsw-alias-border-l1);
+  box-shadow: -30px 0 60px -40px rgba(16, 16, 24, 0.35);
+  display: flex; flex-direction: column; padding: 18px 18px 14px;
+}
+[hidden] { display: none !important; }
+.drawer-head { display: flex; align-items: center; margin-bottom: 14px; }
+.drawer-head h2 { font-size: 15px; font-weight: 600; margin: 0; }
+.drawer-head .spacer { flex: 1; }
+.x-btn { width: 26px; height: 26px; border: 0; border-radius: 6px; background: none; cursor: pointer;
+  color: var(--dsw-alias-label-secondary); font: inherit; font-size: 13px; }
+.x-btn:hover { background: var(--dsw-alias-interactive-bg-hover); color: var(--dsw-alias-label-primary); }
+.search { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px;
+  border-radius: 8px; border: 1px solid var(--dsw-alias-border-l2); background: var(--dsw-alias-bg-base); }
+.search svg { width: 13px; height: 13px; color: var(--dsw-alias-label-tertiary); flex: none; }
+.search input { flex: 1; border: 0; outline: none; background: none; font: inherit; font-size: 12px; color: var(--dsw-alias-label-primary); }
+.dhint { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); margin: 10px 0 2px; }
+.results {
+  display: flex; flex-direction: column; gap: 1px;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  margin-right: -8px; padding-right: 8px;   /* 给滚动条留位置 */
+  scrollbar-width: thin;
+}
+.res { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 8px; border-radius: 8px; cursor: pointer; }
+.res:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.res.sel { background: var(--dsw-alias-interactive-bg-hover); }
+.res.sel .nm { font-weight: 600; }
+.res .th { width: 30px; height: 32px; flex: none; display: flex; align-items: center; justify-content: center; }
+.res .th img, .res .th svg { width: 30px; height: 32px; object-fit: contain; }
+.res .nm { font-size: 12.5px; }
+.res .sl { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); }
+.res .spacer { flex: 1; }
+.res .buy { border: 0; background: none; font: inherit; font-size: 11.5px; color: var(--dsw-alias-label-primary);
+  padding: 3px 7px; border-radius: 6px; cursor: pointer; }
+.res .buy:hover { background: var(--dsw-alias-interactive-bg-active); }
+.res .mark { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); }
+
+.drawer-preview { position: relative; margin-top: 12px; border-radius: 12px; padding: 10px; text-align: center; flex: none;
+  border-top: 1px solid var(--dsw-alias-border-l1); border-top-left-radius: 0; border-top-right-radius: 0;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 3.5%, transparent); }
+.drawer-preview::before {
+  content: ''; position: absolute; left: 0; right: 0; top: -14px; height: 14px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--dsw-alias-bg-base));
+}
+.drawer-preview .pic { height: 104px; display: flex; align-items: flex-end; justify-content: center; }
+.drawer-preview .pic svg { width: 92px; height: 100px; }
+.drawer-preview .cap { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); margin-top: 5px; }
+.drawer-preview .acts { display: flex; gap: 4px; justify-content: center; margin-top: 8px; }
+.drawer-foot { display: flex; align-items: center; flex: none; padding-top: 10px; }
+.drawer-foot .link { border: 0; background: none; padding: 0; font: inherit; font-size: 11.5px;
+  color: var(--dsw-alias-label-secondary); cursor: pointer; }
+.drawer-foot .spacer { flex: 1; }
+.drawer-foot .num { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); }
+
+/* ===== 弹框家族 ===== */
+.modal {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 380px; box-sizing: border-box; padding: 20px 20px 16px;
+  border-radius: 16px; background: var(--dsw-alias-bg-base);
+  border: 1px solid var(--dsw-alias-border-l2);
+  box-shadow: 0 30px 60px -30px rgba(16, 16, 24, 0.45), 0 2px 8px rgba(16, 16, 24, 0.06);
+  z-index: 40;
+}
+.modal .m-title { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.modal .m-title.err { color: var(--dsw-alias-state-error-primary); }
+.modal .m-body { font-size: 12px; line-height: 1.65; color: var(--dsw-alias-label-secondary); margin: 8px 0 0; }
+.modal .m-meta { font-size: 11px; color: var(--dsw-alias-label-tertiary); margin-top: 7px; }
+.modal .m-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.modal.runtime { width: 400px; padding: 24px 22px 20px; text-align: center; }
+.modal.runtime .m-actions { justify-content: center; }
+.modal.runtime .m-meta { text-align: center; }
+.modal.runtime .rt-art { width: 56px; height: 56px; margin: 0 auto 14px; }
+.modal.runtime .rt-art svg { width: 56px; height: 56px; border-radius: 15px; display: block;
+  box-shadow: 0 8px 18px -10px rgba(16,16,24,0.4), 0 0 0 1px rgba(0,0,0,0.04); }
+
+.btn-primary, .btn-ghost, .btn-danger, .btn-link {
+  font: inherit; font-size: 11.5px; height: 30px; padding: 0 14px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary { background: var(--dsw-alias-label-primary); color: var(--dsw-alias-bg-base); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary);
+  border-color: var(--dsw-alias-border-l2); }
+.btn-ghost:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.btn-danger { background: var(--dsw-alias-state-error-primary); color: #fff; }
+.btn-danger:hover { filter: brightness(1.06); }
+.btn-link { background: none; border: 0; color: var(--dsw-alias-label-secondary); padding: 0 6px; height: 26px; }
+.btn-link:hover { color: var(--dsw-alias-label-primary); }
+
+.progress { height: 6px; border-radius: 999px; overflow: hidden; margin-top: 14px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 10%, transparent); }
+.progress > i { display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--dsw-alias-label-primary) 55%, transparent), var(--dsw-alias-label-primary)); }
+
+/* 抽屉：安装中 / 完成 / 空结果 */
+.install-strip {
+  flex: none; margin: 2px 0 8px; padding: 10px 12px; border-radius: 10px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 4%, transparent);
+}
+.is-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.is-name { font-size: 12px; color: var(--dsw-alias-label-primary); }
+.is-pct { font-size: 11.5px; color: var(--dsw-alias-label-secondary); }
+.install-strip .progress { margin-top: 8px; height: 5px; }
+.is-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+.is-meta { font-size: 10.5px; color: var(--dsw-alias-label-tertiary); }
+
+.res { position: relative; }
+.res.installing { background: var(--dsw-alias-interactive-bg-hover); }
+.res { overflow: hidden; }
+.res.installing::before {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 12%, transparent);
+}
+.res.installing::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: 62%;
+  background: var(--dsw-alias-label-primary);
+}
+.res .buy.pct { color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }
+
+.success-panel, .empty-state {
+  flex: none; margin: auto 0; padding: 18px 14px; border-radius: 12px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 3.5%, transparent);
+}
+.sp-icon {
+  width: 34px; height: 34px; margin: 0 auto 10px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 16px;
+  color: var(--dsw-alias-state-success-primary); font-weight: 600;
+  background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 14%, transparent);
+}
+.sp-title { font-size: 13px; font-weight: 600; color: var(--dsw-alias-label-primary); }
+.sp-body { font-size: 11.5px; line-height: 1.6; color: var(--dsw-alias-label-secondary); margin: 6px 0 12px; }
+.sp-btn { width: 100%; }
+.es-title { font-size: 13px; font-weight: 600; color: var(--dsw-alias-label-primary); }
+.es-body { font-size: 11.5px; line-height: 1.6; color: var(--dsw-alias-label-secondary); margin: 6px 0 12px; }
+</style>
+</head>
+<body>
+<script>if(new URLSearchParams(location.search).get("theme")==="dark")document.body.setAttribute("data-ds-dark-theme","");</script>
+<div class="app">
+  <aside class="sb">
+    <div class="sb-lights"><i></i><i></i><i></i></div>
+    <div class="sb-new"><span>新对话</span><span>⌘N</span></div>
+    <div class="sb-label">工作区</div>
+    <div class="sb-item"><span class="ico">◍</span>今天的会话</div>
+    <div class="sb-item"><span class="ico">◍</span>重构说明文档</div>
+    <div class="sb-item"><span class="ico">◍</span>插件设置页排查</div>
+    <div class="sb-label">插件</div>
+    <div class="sb-item active"><span class="ico">🐾</span>我的宠物</div>
+    <div class="sb-item"><span class="ico">⧉</span>插件管理</div>
+    <div class="sb-item"><span class="ico">◔</span>定时任务</div>
+    <div class="sb-foot"><span class="av"></span>zgj</div>
+  </aside>
+
+  <main class="main">
+    <div class="page-topbar"><h1>我的宠物</h1></div>
+    <div class="scroll">
+      <div class="wrap">
+        <div class="stage">
+          <div class="stage-head">
+            <div class="who">
+              <div class="nm">灰豆</div>
+              <div class="meta"><span class="dot"></span>已激活 · 实时同步会话状态</div>
+            </div>
+            <button type="button" role="switch" aria-checked="true" class="switch">
+              <span class="lab">显示宠物</span><span class="track on"><i></i></span>
+            </button>
+          </div>
+
+          <div class="scene" role="group" aria-label="宠物池" data-params="190,14,70,0.55,0.26,0.12,6">
+          <div class="pet-item" role="button" data-slug="builtin" aria-label="内置小猫">
+            <span class="tile-cat">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M17 28 L11 7 L34 19 Z" fill="#f2b950"></path>
+              <path d="M47 28 L53 7 L30 19 Z" fill="#f2b950"></path>
+              <circle cx="32" cy="39" r="20" fill="#ffd166"></circle>
+              <ellipse cx="22" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+              <ellipse cx="42" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+              <circle cx="25" cy="36" r="3" fill="#3a2c1a"></circle>
+              <circle cx="39" cy="36" r="3" fill="#3a2c1a"></circle>
+              <path d="M28 44 Q32 47 36 44" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+            </svg>
+            </span>
+          </div>
+          <div class="pet-item center" role="button" data-slug="huidou" aria-label="灰豆">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/huidou.png" alt="">
+          </div>
+          <div class="pet-item" role="button" data-slug="lulu-capybara-2" aria-label="噜噜">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/lulu-capybara-2.png" alt="">
+          </div>
+          <div class="pet-item" role="button" data-slug="line-dog" aria-label="线条小狗">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/line-dog.png" alt="">
+          </div>
+          <div class="pet-item" role="button" data-slug="shinchan-4" aria-label="小新">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/shinchan-4.png" alt="">
+          </div>
+          <div class="pet-item" role="button" data-slug="g1" aria-label="G1">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/g1.png" alt="">
+          </div>
+          <div class="pet-item" role="button" data-slug="lumei" aria-label="噜妹">
+            <button class="x" type="button" aria-label="移除">✕</button>
+            <img src="../assets/lumei.png" alt="">
+          </div>
+          </div>
+
+          <div class="bar">
+            <span class="chip on">待机</span>
+            <span class="chip">跑动</span>
+            <span class="chip">挥手</span>
+            <span class="chip">跳跃</span>
+            <span class="spacer"></span>
+            <button class="add-btn" id="openDrawer">添加宠物</button>
+          </div>
+        </div>
+
+        <div class="stack">
+          <section class="card">
+            <div class="card-head"><h3>设置</h3></div>
+            <div class="row">
+              <span class="lab">透明度</span>
+              <div class="seg"><span class="s">30%</span><span class="s">60%</span><span class="s">90%</span><span class="s on">100%</span></div>
+            </div>
+            <div class="row">
+              <span class="lab">大小</span>
+              <div class="seg"><span class="s">小</span><span class="s on">中</span><span class="s">大</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head"><h3>运行环境</h3></div>
+            <p class="desc">宠物跑在独立的 Electron 进程里，以下状态来自宿主实时检测</p>
+            <div class="row">
+              <span class="lab">状态</span>
+              <span class="val"><span class="pill ok"><i class="d"></i>已就绪</span><span class="sub">（使用已下载的运行时）</span></span>
+              <span class="spacer"></span>
+              <button class="link-btn">重新检测</button>
+            </div>
+            <div class="row">
+              <span class="lab">版本</span>
+              <code>Electron 45.2.2</code>
+            </div>
+            <div class="row">
+              <span class="lab">位置</span>
+              <code>~/.petdex/dsh-float/runtime</code>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <aside class="drawer" id="drawer" hidden>
+      <div class="drawer-head">
+        <h2>添加宠物</h2>
+        <span class="spacer"></span>
+        <button class="x-btn">✕</button>
+      </div>
+      <div class="search">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="7" cy="7" r="4.6" stroke="currentColor" stroke-width="1.4"></circle>
+          <path d="M10.6 10.6 L13.6 13.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+        </svg>
+        <input value="猫" aria-label="搜索宠物">
+      </div>
+
+      <div class="dhint">1,248 只宠物 · 点「安装」后立即出现在宠物池</div>
+      <div class="results">
+        <div class="res sel">
+          <div class="th">
+            <svg viewBox="0 0 96 104" aria-hidden="true">
+              <ellipse cx="48" cy="94" rx="30" ry="6" fill="rgba(0,0,0,0.06)"></ellipse>
+              <path d="M22 40 L16 14 L40 26 Z" fill="#b9a3f0"></path>
+              <path d="M74 40 L80 14 L56 26 Z" fill="#b9a3f0"></path>
+              <circle cx="48" cy="52" r="30" fill="#cab6f5"></circle>
+              <ellipse cx="34" cy="56" rx="5" ry="3.4" fill="#e7b7c8" opacity="0.9"></ellipse>
+              <ellipse cx="62" cy="56" rx="5" ry="3.4" fill="#e7b7c8" opacity="0.9"></ellipse>
+              <circle cx="38" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <circle cx="58" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <path d="M44 58 Q48 61 52 58" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+              <ellipse cx="48" cy="82" rx="18" ry="14" fill="#cab6f5"></ellipse>
+            </svg>
+          </div>
+          <span class="nm">紫薯猫</span><span class="sl">purple-mochi</span>
+          <span class="spacer"></span><button class="buy">安装</button>
+        </div>
+        <div class="res">
+          <div class="th"><img src="../assets/lulu-capybara-2.png" alt=""></div>
+          <span class="nm">噜噜</span><span class="sl">lulu-capybara</span>
+          <span class="spacer"></span><span class="mark">✓ 已安装</span>
+        </div>
+        <div class="res">
+          <div class="th"><img src="../assets/line-dog.png" alt=""></div>
+          <span class="nm">线条小狗</span><span class="sl">line-dog</span>
+          <span class="spacer"></span><span class="mark">✓ 已安装</span>
+        </div>
+        <div class="res">
+          <div class="th">
+            <svg viewBox="0 0 96 104" aria-hidden="true">
+              <ellipse cx="48" cy="94" rx="30" ry="6" fill="rgba(0,0,0,0.06)"></ellipse>
+              <path d="M22 40 L16 14 L40 26 Z" fill="#e8e2da"></path>
+              <path d="M74 40 L80 14 L56 26 Z" fill="#e8e2da"></path>
+              <circle cx="48" cy="52" r="30" fill="#f4efe8"></circle>
+              <circle cx="38" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <circle cx="58" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <path d="M44 58 Q48 61 52 58" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+              <ellipse cx="48" cy="82" rx="18" ry="14" fill="#f4efe8"></ellipse>
+            </svg>
+          </div>
+          <span class="nm">布偶猫</span><span class="sl">ragdoll</span>
+          <span class="spacer"></span><button class="buy">安装</button>
+        </div>
+        <div class="res">
+          <div class="th"><img src="../assets/shinchan-4.png" alt=""></div>
+          <span class="nm">小新</span><span class="sl">shinchan</span>
+          <span class="spacer"></span><span class="mark">✓ 已安装</span>
+        </div>
+        <div class="res">
+          <div class="th">
+            <svg viewBox="0 0 96 104" aria-hidden="true">
+              <ellipse cx="48" cy="94" rx="30" ry="6" fill="rgba(0,0,0,0.06)"></ellipse>
+              <path d="M22 40 L16 14 L40 26 Z" fill="#c9c9cc"></path>
+              <path d="M74 40 L80 14 L56 26 Z" fill="#c9c9cc"></path>
+              <circle cx="48" cy="52" r="30" fill="#dcdcdf"></circle>
+              <circle cx="38" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <circle cx="58" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <path d="M44 58 Q48 61 52 58" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+              <ellipse cx="48" cy="82" rx="18" ry="14" fill="#dcdcdf"></ellipse>
+            </svg>
+          </div>
+          <span class="nm">银渐层</span><span class="sl">silver-chinchilla</span>
+          <span class="spacer"></span><button class="buy">安装</button>
+        </div>
+        <div class="res">
+          <div class="th"><img src="../assets/g1.png" alt=""></div>
+          <span class="nm">G1</span><span class="sl">g1</span>
+          <span class="spacer"></span><span class="mark">✓ 已安装</span>
+        </div>
+        <div class="res">
+          <div class="th">
+            <svg viewBox="0 0 96 104" aria-hidden="true">
+              <ellipse cx="48" cy="94" rx="30" ry="6" fill="rgba(0,0,0,0.06)"></ellipse>
+              <path d="M22 40 L16 14 L40 26 Z" fill="#e8e2da"></path>
+              <path d="M74 40 L80 14 L56 26 Z" fill="#e8e2da"></path>
+              <circle cx="48" cy="52" r="30" fill="#f4efe8"></circle>
+              <circle cx="38" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <circle cx="58" cy="49" r="3.6" fill="#3a2c1a"></circle>
+              <path d="M44 58 Q48 61 52 58" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+              <ellipse cx="48" cy="82" rx="18" ry="14" fill="#f4efe8"></ellipse>
+            </svg>
+          </div>
+          <span class="nm">三花猫</span><span class="sl">calico</span>
+          <span class="spacer"></span><button class="buy">安装</button>
+        </div>
+        <div class="res">
+          <div class="th"><img src="../assets/lumei.png" alt=""></div>
+          <span class="nm">噜妹</span><span class="sl">lumei</span>
+          <span class="spacer"></span><span class="mark">✓ 已安装</span>
+        </div>
+      </div>
+      <div class="drawer-preview">
+        <div class="pic">
+          <svg viewBox="0 0 96 104" aria-hidden="true">
+            <ellipse cx="48" cy="94" rx="30" ry="6" fill="rgba(0,0,0,0.08)"></ellipse>
+            <path d="M22 40 L16 14 L40 26 Z" fill="#b9a3f0"></path>
+            <path d="M74 40 L80 14 L56 26 Z" fill="#b9a3f0"></path>
+            <circle cx="48" cy="52" r="30" fill="#cab6f5"></circle>
+            <ellipse cx="34" cy="56" rx="5" ry="3.4" fill="#e7b7c8" opacity="0.9"></ellipse>
+            <ellipse cx="62" cy="56" rx="5" ry="3.4" fill="#e7b7c8" opacity="0.9"></ellipse>
+            <circle cx="38" cy="49" r="3.6" fill="#3a2c1a"></circle>
+            <circle cx="58" cy="49" r="3.6" fill="#3a2c1a"></circle>
+            <path d="M44 58 Q48 61 52 58" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+            <ellipse cx="48" cy="82" rx="18" ry="14" fill="#cab6f5"></ellipse>
+          </svg>
+        </div>
+        <div class="cap">预览 · 紫薯猫 · purple-mochi</div>
+        <div class="acts">
+          <span class="chip on">待机</span><span class="chip">跑动</span><span class="chip">挥手</span><span class="chip">跳跃</span>
+        </div>
+      </div>
+
+
+
+      <div class="empty-state" hidden>
+        <div class="es-title">没有匹配的宠物</div>
+        <p class="es-body">换个关键词，或到 petdex.dev 看看全部宠物。</p>
+        <button class="btn-ghost">打开 petdex.dev ↗</button>
+      </div>
+
+      <div class="drawer-foot">
+        <button class="link">打开 petdex.dev ↗</button>
+        <span class="spacer"></span>
+        <span class="num">共 1,248 只</span>
+      </div>
+    </aside>
+
+
+    <div class="modal runtime" data-d="runtime-missing" hidden>
+      <div class="rt-art"><svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#fff4d6"></rect>
+        <path d="M17 28 L11 7 L34 19 Z" fill="#f2b950"></path>
+        <path d="M47 28 L53 7 L30 19 Z" fill="#f2b950"></path>
+        <circle cx="32" cy="39" r="20" fill="#ffd166"></circle>
+        <ellipse cx="22" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <ellipse cx="42" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <circle cx="25" cy="36" r="3" fill="#3a2c1a"></circle>
+        <circle cx="39" cy="36" r="3" fill="#3a2c1a"></circle>
+        <path d="M28 44 Q32 47 36 44" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+      </svg></div>
+      <div class="m-title">需要先准备运行环境</div>
+      <p class="m-body">我需要先装好 Electron 45.2.2 运行时，才能出来陪你</p>
+      <div class="m-actions">
+        <button class="btn-ghost">取消</button>
+        <button class="btn-primary">下载</button>
+      </div>
+    </div>
+
+    <div class="modal runtime" data-d="runtime-progress" hidden>
+      <div class="rt-art"><svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#fff4d6"></rect>
+        <path d="M17 28 L11 7 L34 19 Z" fill="#f2b950"></path>
+        <path d="M47 28 L53 7 L30 19 Z" fill="#f2b950"></path>
+        <circle cx="32" cy="39" r="20" fill="#ffd166"></circle>
+        <ellipse cx="22" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <ellipse cx="42" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <circle cx="25" cy="36" r="3" fill="#3a2c1a"></circle>
+        <circle cx="39" cy="36" r="3" fill="#3a2c1a"></circle>
+        <path d="M28 44 Q32 47 36 44" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+      </svg></div>
+      <div class="m-title">正在准备宠物</div>
+      <p class="m-body">正在下载 Electron 45.2.2 运行时</p>
+      <div class="progress"><i style="width:62%"></i></div>
+      <div class="m-meta">62% · 12.4 / 20.0 MB</div>
+      <div class="m-actions">
+        <button class="btn-link">取消下载</button>
+      </div>
+    </div>
+
+    <div class="modal runtime" data-d="runtime-failed" hidden>
+      <div class="rt-art"><svg viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#fff4d6"></rect>
+        <path d="M17 28 L11 7 L34 19 Z" fill="#f2b950"></path>
+        <path d="M47 28 L53 7 L30 19 Z" fill="#f2b950"></path>
+        <circle cx="32" cy="39" r="20" fill="#ffd166"></circle>
+        <ellipse cx="22" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <ellipse cx="42" cy="43" rx="3.4" ry="2.2" fill="#ffab9e" opacity="0.8"></ellipse>
+        <circle cx="25" cy="36" r="3" fill="#3a2c1a"></circle>
+        <circle cx="39" cy="36" r="3" fill="#3a2c1a"></circle>
+        <path d="M28 44 Q32 47 36 44" stroke="#3a2c1a" stroke-width="2" fill="none" stroke-linecap="round"></path>
+      </svg></div>
+      <div class="m-title err">安装失败</div>
+      <p class="m-body">下载在校验阶段中断，请检查网络后重试。</p>
+      <div class="m-actions">
+        <button class="btn-ghost">取消</button>
+        <button class="btn-primary">重试</button>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="tag">方案 C6 · 舞台 + 3D 宠物区</div>
+<script>
+  if (new URLSearchParams(location.search).get("state") === "install") {
+    document.getElementById("scrim").hidden = false;
+    document.getElementById("drawer").hidden = false;
+  }
+</script>
+<script src="carousel3d.js"></script>
+
+<script>
+(function () {
+  var d = new URLSearchParams(location.search).get('d') || 'drawer';
+  var scrim = document.getElementById('scrim');
+  var drawer = document.getElementById('drawer');
+  var show = function (el) { if (el) el.hidden = false; };
+  var hide = function (el) { if (el) el.hidden = true; };
+
+  if (d.indexOf('drawer') === 0) {
+    show(scrim); show(drawer);
+    var empty = drawer.querySelector('.empty-state');
+    var results = drawer.querySelector('.results');
+    var preview = drawer.querySelector('.drawer-preview');
+    if (d === 'drawer-installing') {
+      var first = results.querySelector('.res');
+      if (first) {
+        first.classList.add('installing');
+        var buy = first.querySelector('.buy');
+        if (buy) { buy.textContent = '62%'; buy.classList.add('pct'); }
+      }
+      drawer.querySelectorAll('.res').forEach(function (r, i) { if (i) r.style.opacity = '0.55'; });
+    } else if (d === 'drawer-empty') {
+      show(empty); hide(results); hide(preview);
+    }
+    return;
+  }
+
+  var modal = document.querySelector('.modal[data-d="' + d + '"]');
+  if (modal) { show(scrim); show(modal); }
+})();
+</script>
+</body>
+</html>

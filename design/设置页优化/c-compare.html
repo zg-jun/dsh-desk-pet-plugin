@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>C vs C2</title>
+<style>
+  body { margin: 0; padding: 24px; width: 1290px; box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #f5f6f7; color: #1b1d21; }
+  h1 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  p.sub { font-size: 11.5px; color: #6b7280; margin: 0 0 18px; }
+  figure { margin: 0 0 20px; }
+  .shot { border: 1px solid rgba(0,0,0,.08); border-radius: 10px; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 1240px; height: auto; }
+  figcaption { display: flex; align-items: baseline; gap: 8px; margin: 8px 0 0; }
+  figcaption b { font-size: 12px; }
+  figcaption span { font-size: 10.5px; color: #6b7280; }
+</style>
+</head>
+<body>
+  <h1>C → C2：只做减法与对齐</h1>
+  <p class="sub">同一个视口、同一份数据；C2 去掉重复入口、把下方两块压成等高、舞台放大。</p>
+  <figure>
+    <div class="shot"><img src="screens/c-light.png" alt="C"></div>
+    <figcaption><b>C（初版）</b><span>舞台 268 · 切换条与舞台各有一个「添加」入口 · 下方 1.3fr/1fr 两块不等高 · 底部提示句</span></figcaption>
+  </figure>
+  <figure>
+    <div class="shot"><img src="screens/c2-light.png" alt="C2"></div>
+    <figcaption><b>C2（收敛版）</b><span>舞台 320 · 唯一入口「＋添加宠物」 · 两块等宽等高、外观改两行设置 · 去掉提示句</span></figcaption>
+  </figure>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>设置页 · 四版对比</title>
+<style>
+  body {
+    margin: 0; padding: 28px; width: 1312px; box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #f5f6f7; color: #1b1d21; -webkit-font-smoothing: antialiased;
+  }
+  h1 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  p.sub { font-size: 11.5px; color: #6b7280; margin: 0 0 20px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 22px; }
+  figure { margin: 0; }
+  .shot {
+    border-radius: 10px; overflow: hidden; border: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 8px 24px -18px rgba(16,16,24,.35);
+    background: #fff;
+  }
+  .shot img { display: block; width: 100%; height: auto; }
+  figcaption { display: flex; align-items: baseline; gap: 8px; margin-top: 8px; }
+  figcaption b { font-size: 12px; font-weight: 600; }
+  figcaption span { font-size: 10.5px; color: #6b7280; }
+</style>
+</head>
+<body>
+  <h1>设置页 · 四版对比（浅色主题）</h1>
+  <p class="sub">同一份真实数据与 DSH 主题令牌；现状为 src/scene/web/styles.js 的当前实现，A/B/C 为三个优化方向。</p>
+  <div class="grid">
+    <figure>
+      <div class="shot"><img src="screens/baseline-light.png" alt="现状"></div>
+      <figcaption><b>现状</b><span>5 张等重卡片 · 3D 轮播 · 双层标题 · 需滚动</span></figcaption>
+    </figure>
+    <figure>
+      <div class="shot"><img src="screens/a-light.png" alt="方案 A"></div>
+      <figcaption><b>方案 A · 极简留白</b><span>单列 620 · 无卡片 · 保留 3D 切换 · 一屏放下</span></figcaption>
+    </figure>
+    <figure>
+      <div class="shot"><img src="screens/b-light.png" alt="方案 B"></div>
+      <figcaption><b>方案 B · 分栏设置</b><span>左目录 + 44px 设置行 · 保留 3D 切换 · 密度最高</span></figcaption>
+    </figure>
+    <figure>
+      <div class="shot"><img src="screens/c-light.png" alt="方案 C"></div>
+      <figcaption><b>方案 C · 舞台聚焦</b><span>大舞台 + 整行 3D 切换 + 两卡 · 抽屉安装</span></figcaption>
+    </figure>
+  </div>
+</body>
+</html>

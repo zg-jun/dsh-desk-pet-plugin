@@ -1,0 +1,2242 @@
+{
+  "source": "dist/screen/float.html @ 2.0.0-beta.1",
+  "note": "DOM-level characterization (jsdom). No layout: bounds are validated separately.",
+  "cases": {
+    "en-US": {
+      "idle": {
+        "anim": "idle",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": ""
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "working": {
+        "anim": "running",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status clickable",
+            "display": "flex",
+            "text": "Working… · Refactor plan analysisShow moreOpen session ›",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Working… · Refactor plan analysisShow more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "Open session ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(129,133,140,0.38), transparent 70%)"
+        },
+        "bob": "busy",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "working-no-session": {
+        "anim": "running",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "flex",
+            "text": "Working… · Background jobShow moreOpen session ›",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Working… · Background jobShow more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "Open session ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(129,133,140,0.38), transparent 70%)"
+        },
+        "bob": "busy",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-approval": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "approval",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "Approval · cleanupRun rm -rf /tmp/xShow moreOpen session › RejectAllow once",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Approval · cleanupRun rm -rf /tmp/xShow moreOpen session ›"
+              },
+              {
+                "cls": "body",
+                "text": "RejectAllow once"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-question": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "question",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "Answer · Which DB?Which database?Show moreOpen session › PostgresRecommendedMySQLOther answer · open sessionSkipSubmit",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Answer · Which DB?Which database?Show moreOpen session ›"
+              },
+              {
+                "cls": "body",
+                "text": "PostgresRecommendedMySQLOther answer · open sessionSkipSubmi"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-question-multi": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "question",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "Answer · PickPick featuresShow moreOpen session › ABOther answer · open sessionSkipSubmit",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Answer · PickPick featuresShow moreOpen session ›"
+              },
+              {
+                "cls": "body",
+                "text": "ABOther answer · open sessionSkipSubmit"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-other": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "other",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "Action needed · Batch 1/2Show moreOpen session ›",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Action needed · Batch 1/2Show moreOpen session ›"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "done": {
+        "anim": "idle",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status clickable mode-done",
+            "display": "flex",
+            "text": "Finished · Build passedShow moreOpen session ›",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Finished · Build passedShow more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "Open session ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Show more"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "greeting": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Show more"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "switching": {
+        "anim": "idle",
+        "switching": true,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status loading",
+            "display": "flex",
+            "text": "Switching…Show more",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Switching…Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Show more"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "hint-before-hide": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Show more"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "appearance-0.6-1.3": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "Show more"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "Show more",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "Show more"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "0.6",
+          "bubbleAlpha": "",
+          "scale": "1.3"
+        }
+      }
+    },
+    "zh-CN": {
+      "idle": {
+        "anim": "idle",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": ""
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "working": {
+        "anim": "running",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status clickable",
+            "display": "flex",
+            "text": "正在工作… · Refactor plan analysis展开全文打开会话 ›",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "正在工作… · Refactor plan analysis展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "打开会话 ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(129,133,140,0.38), transparent 70%)"
+        },
+        "bob": "busy",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "working-no-session": {
+        "anim": "running",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "flex",
+            "text": "正在工作… · Background job展开全文打开会话 ›",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "正在工作… · Background job展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "打开会话 ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "band",
+                "text": ""
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(129,133,140,0.38), transparent 70%)"
+        },
+        "bob": "busy",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-approval": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "approval",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "等你审批 · cleanupRun rm -rf /tmp/x展开全文打开会话 › 拒绝允许一次",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "等你审批 · cleanupRun rm -rf /tmp/x展开全文打开会话 ›"
+              },
+              {
+                "cls": "body",
+                "text": "拒绝允许一次"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-question": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "question",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "等你回答 · Which DB?Which database?展开全文打开会话 › Postgres推荐MySQL其他答案 · 在会话中输入跳过提交",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "等你回答 · Which DB?Which database?展开全文打开会话 ›"
+              },
+              {
+                "cls": "body",
+                "text": "Postgres推荐MySQL其他答案 · 在会话中输入跳过提交"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-question-multi": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "question",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "等你回答 · PickPick features展开全文打开会话 › AB其他答案 · 在会话中输入跳过提交",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "等你回答 · PickPick features展开全文打开会话 ›"
+              },
+              {
+                "cls": "body",
+                "text": "AB其他答案 · 在会话中输入跳过提交"
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "waiting-other": {
+        "anim": "jumping",
+        "switching": false,
+        "pendingKind": "other",
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#81858c",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act clickable",
+            "display": "flex",
+            "text": "等你处理 · Batch 1/2展开全文打开会话 ›",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "等你处理 · Batch 1/2展开全文打开会话 ›"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(245,158,11,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "done": {
+        "anim": "idle",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status clickable mode-done",
+            "display": "flex",
+            "text": "已完成 · Build passed展开全文打开会话 ›",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "已完成 · Build passed展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": "打开会话 ›"
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "展开全文"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "block",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "greeting": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "展开全文"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "switching": {
+        "anim": "idle",
+        "switching": true,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status loading",
+            "display": "flex",
+            "text": "换装中…展开全文",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "换装中…展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "展开全文"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "block",
+          "happy": "none"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "hint-before-hide": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "展开全文"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "",
+          "bubbleAlpha": "",
+          "scale": ""
+        }
+      },
+      "appearance-0.6-1.3": {
+        "anim": "waving",
+        "switching": false,
+        "pendingKind": null,
+        "bubbles": {
+          "status": {
+            "cls": "bubble status",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#22c55e",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": "展开全文"
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "alert": {
+            "cls": "bubble alert",
+            "display": "none",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "dot",
+                "text": ""
+              },
+              {
+                "cls": "bubble-main",
+                "text": ""
+              },
+              {
+                "cls": "locate-txt",
+                "text": ""
+              }
+            ]
+          },
+          "greet": {
+            "cls": "bubble greet",
+            "display": "flex",
+            "text": "",
+            "dot": "",
+            "children": [
+              {
+                "cls": "bubble-main",
+                "text": ""
+              }
+            ]
+          },
+          "act": {
+            "cls": "bubble act",
+            "display": "none",
+            "text": "展开全文",
+            "dot": "#f59e0b",
+            "children": [
+              {
+                "cls": "band",
+                "text": "展开全文"
+              },
+              {
+                "cls": "body",
+                "text": ""
+              }
+            ]
+          }
+        },
+        "halo": {
+          "display": "none",
+          "bg": "radial-gradient(ellipse at center, rgba(34,197,94,0.38), transparent 70%)"
+        },
+        "bob": "",
+        "eyes": {
+          "open": "none",
+          "happy": "block"
+        },
+        "sprite": {
+          "canvas": "none",
+          "cat": "block"
+        },
+        "vars": {
+          "alpha": "0.6",
+          "bubbleAlpha": "",
+          "scale": "1.3"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,219 @@
+html, body { margin: 0; height: 100%; overflow: hidden; background: transparent; }
+  body { user-select: none; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+         box-sizing: border-box; padding-bottom: 10px; }
+  #pet { position: relative; width: 96px; height: 104px; cursor: grab;
+         opacity: var(--pet-alpha, 1); transform: scale(var(--pet-scale, 1)); transform-origin: 50% 100%;
+         transition: opacity 0.18s ease, transform 0.18s ease; }
+  #pet.grabbing { cursor: grabbing; }
+  #bob { animation: bob 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+  #bob.busy { animation-duration: 0.9s; }
+  #bob.jump { animation: jump 0.9s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes jump { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } }
+  #halo {
+    position: absolute; inset: -20px; border-radius: 50%; pointer-events: none; z-index: -1;
+    display: none; animation: haloPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes haloPulse { 0%, 100% { opacity: 0.45; transform: scale(0.94); } 50% { opacity: 1; transform: scale(1.06); } }
+  canvas { display: block; pointer-events: none; }
+  #cat { display: none; pointer-events: none; }
+  #cat .tail { transform-box: fill-box; transform-origin: 0% 100%; animation: tail 1.8s ease-in-out infinite; }
+  #bob.busy #cat .tail { animation-duration: 0.6s; }
+  @keyframes tail { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(10deg); } }
+
+  /* ---- bubbles: flat paper, same language as the settings page ------------
+     surface + hairline border + soft shadow; radius 14 / 16; 12.5px body;
+     6px flat state bead; selected option uses the primary fill. */
+  :root {
+    --dpb-r-card: 14px;
+    --dpb-r-modal: 16px;
+    --dpb-r-ctl: 8px;
+    --dpb-r-pill: 999px;
+    --dpb-surface: #ffffff;
+    --dpb-border: rgba(16, 16, 24, 0.08);
+    --dpb-border-strong: rgba(16, 16, 24, 0.20);
+    --dpb-text: #121216;
+    --dpb-text-2: #56595f;
+    --dpb-text-3: #8b8f97;
+    --dpb-primary: #121216;
+    --dpb-on-primary: #ffffff;
+    --dpb-success: #2f9e44;
+    --dpb-warn: #e8a33d;
+    --dpb-danger: #e5534b;
+    --dpb-neutral: #9aa0a8;
+    --dpb-shadow: 0 8px 22px -14px rgba(16, 16, 24, 0.28), 0 1px 2px rgba(16, 16, 24, 0.05);
+    --dpb-shadow-hover: 0 14px 30px -14px rgba(16, 16, 24, 0.40), 0 2px 4px rgba(16, 16, 24, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --dpb-surface: #1c1c20;
+      --dpb-border: rgba(255, 255, 255, 0.12);
+      --dpb-border-strong: rgba(255, 255, 255, 0.22);
+      --dpb-text: #f2f2f4;
+      --dpb-text-2: #bcbec4;
+      --dpb-text-3: #8b8f97;
+      --dpb-primary: #f2f2f4;
+      --dpb-on-primary: #101014;
+      --dpb-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.60), 0 1px 2px rgba(0, 0, 0, 0.40);
+      --dpb-shadow-hover: 0 14px 30px -14px rgba(0, 0, 0, 0.70), 0 2px 4px rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  .bubble {
+    position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+    display: none; align-items: flex-start; gap: 6px;
+    box-sizing: border-box; width: max-content; max-width: 340px;
+    padding: 8px 12px;
+    border-radius: var(--dpb-r-card);
+    font: 12.5px/1.5 -apple-system, "PingFang SC", "Segoe UI", sans-serif;
+    letter-spacing: 0.005em;
+    color: var(--dpb-text-2); text-align: left;
+    background: var(--dpb-surface);
+    border: 1px solid var(--dpb-border);
+    box-shadow: var(--dpb-shadow);
+    pointer-events: none; white-space: normal; overflow-wrap: anywhere; word-break: break-word;
+    transition: transform 0.14s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.18s ease, filter 0.12s ease;
+  }
+  /* 状态词弱化、标题加强 */
+  .bubble .txt .st { color: var(--dpb-text-3); }
+  .bubble .txt .sp { color: var(--dpb-text-3); }
+  .bubble .txt .tt { color: var(--dpb-text); }
+  .bubble .txt {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; min-width: 0; max-width: 264px;
+  }
+  .bubble-main { display: flex; flex-direction: column; min-width: 0; flex: 1; align-items: flex-start; }
+  /* Only a bubble that can reach a session is interactive. */
+  .bubble.clickable { pointer-events: auto; cursor: default; }
+  .bubble.clickable:hover { transform: translateX(-50%) translateY(-1px); box-shadow: var(--dpb-shadow-hover); }
+  .bubble.clickable:active { transform: translateX(-50%) translateY(0); filter: brightness(0.97); }
+  .bubble.clickable .txt { cursor: default; }
+
+  /* quiet "open session" affordance */
+  .bubble .locate-txt {
+    display: inline-flex; align-items: center; margin-top: 0;
+    align-self: flex-start;
+    font: 500 12.5px/1.5 -apple-system, "PingFang SC", "Segoe UI", sans-serif;
+    color: var(--dpb-text-3); letter-spacing: 0.005em;
+    margin-left: auto; white-space: nowrap; flex: none; cursor: pointer;
+    transition: color 0.14s ease;
+  }
+  .bubble .locate-txt:hover { color: var(--dpb-text-2); }
+
+  /* flat state bead */
+  .bubble .dot {
+    display: block; width: 6px; height: 6px; border-radius: 50%; flex: none;
+    margin-top: 6px; box-sizing: border-box;
+    background: var(--dot-c, var(--dpb-neutral));
+    animation: dotPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .bubble.status.mode-done .dot { animation: none; }
+  /* pet swap: the bead turns into a spinner while the sheet loads */
+  .bubble.loading .dot {
+    width: 10px; height: 10px; margin-top: 4px;
+    background: transparent; border: 1.5px solid color-mix(in srgb, var(--dpb-neutral) 35%, transparent);
+    border-top-color: var(--dpb-neutral);
+    animation: dotSpin 0.7s linear infinite;
+  }
+  @keyframes dotSpin { to { transform: rotate(360deg); } }
+
+  /* shared "more" control for long text */
+  .bubble .bubble-more {
+    align-self: flex-start; margin-top: 3px; appearance: none; border: 0; background: transparent;
+    padding: 0; font: 500 11px/1.4 -apple-system, "PingFang SC", "Segoe UI", sans-serif;
+    color: var(--dpb-text-3); cursor: pointer;
+  }
+  .bubble .bubble-more:hover { color: var(--dpb-text-2); }
+  .bubble.expanded .txt { display: block; -webkit-line-clamp: unset; max-height: 160px; overflow-y: auto; padding-right: 3px; }
+  .bubble.expanded { border-radius: var(--dpb-r-card); }
+
+  /* ---- actionable card: band + body -------------------------------------- */
+  .bubble.act {
+    flex-direction: column; align-items: stretch; gap: 0; min-width: 240px; max-width: 320px;
+    padding: 0; overflow: hidden; border-radius: var(--dpb-r-card);
+  }
+  .bubble.act.clickable { cursor: default; }
+  .bubble.act .band {
+    display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px; padding: 10px 12px 0;
+  }
+
+  .bubble.act .band .dot { align-self: flex-start; margin-top: 5px; }
+  .bubble.act .band .t {
+    font-size: 12.5px; font-weight: 600; color: var(--dpb-text);
+    white-space: nowrap; flex: none; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; max-width: 150px;
+  }
+  .bubble.act .band .locate-txt { order: 3; }
+  .bubble.act .q-wrap { display: flex; align-items: baseline; gap: 4px; flex: 1; min-width: 0; }
+  .bubble.act .q {
+    font-size: 11.5px; color: var(--dpb-text-3); flex: 1; min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  /* “展开全文”与摘要文字同一基线，避免上浮错位 */
+  .bubble.act .q-wrap .bubble-more {
+    margin-top: 0; align-self: baseline; font-size: 11.5px; line-height: 1.4;
+  }
+  .bubble.act .q-wrap.long { order: 5; flex-basis: 100%; }
+  .bubble.act .q-wrap.expanded { order: 5; flex-basis: 100%; flex-direction: column; align-items: flex-start; }
+  .bubble.act .q-wrap.expanded .q { white-space: normal; max-height: 120px; overflow-y: auto; padding-right: 3px; }
+  .bubble.act .body { padding: 4px 12px 10px; }
+  .bubble.act .body:empty { display: none; }
+
+  /* option chips: same pill language as the settings chips, selected = primary fill */
+  .bubble.act .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .bubble.act .chip {
+    display: inline-flex; align-items: center; gap: 4px; padding: 5px 11px;
+    border-radius: var(--dpb-r-pill);
+    font-size: 11.5px; cursor: pointer; white-space: nowrap; max-width: 100%;
+    color: var(--dpb-text-2); border: 1px solid var(--dpb-border);
+    background: color-mix(in srgb, var(--dpb-surface) 70%, transparent);
+    transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+  }
+  .bubble.act .chip .cl { overflow: hidden; text-overflow: ellipsis; }
+  .bubble.act .chip .ck { display: inline-flex; align-items: center; font-size: 10px; line-height: 1; }
+  .bubble.act .chip:hover { border-color: var(--dpb-border-strong); color: var(--dpb-text); }
+  .bubble.act .chip.sel {
+    border-color: transparent; color: var(--dpb-on-primary); font-weight: 500;
+    background: var(--dpb-primary);
+  }
+  .bubble.act .chip .rec {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; line-height: 1; font-weight: 600;
+    color: var(--dpb-text-2); border-radius: var(--dpb-r-pill);
+    padding: 2px 5px; background: color-mix(in srgb, var(--dpb-primary) 7%, transparent);
+  }
+  .bubble.act .chip.sel .rec { color: var(--dpb-on-primary); background: rgba(255, 255, 255, 0.18); }
+
+  /* selected option's description / plain summary */
+  .bubble.act .desc { display: none; font-size: 11px; color: var(--dpb-text-3); line-height: 1.5; margin-top: 8px; }
+  .bubble.act .desc.on { display: block; }
+  .bubble.act .sum-plain { display: none; font-size: 12px; color: var(--dpb-text-2); line-height: 1.4; }
+  .bubble.act .sum-plain.on { display: block; }
+
+  /* footer: quiet link on the left, actions on the right */
+  .bubble.act .foot { display: none; align-items: center; gap: 8px; margin-top: 6px; }
+  .bubble.act .foot.on { display: flex; }
+  .bubble.act .chips:empty + .desc:not(.on) + .sum-plain:not(.on) + .foot { margin-top: 0; }
+  .bubble.act .foot .custom {
+    appearance: none; border: 0; background: transparent; padding: 0; cursor: pointer;
+    font: 500 11.5px/1.4 -apple-system, "PingFang SC", "Segoe UI", sans-serif;
+    color: var(--dpb-text-3); text-align: left; min-width: 0;
+  }
+  .bubble.act .foot .custom:hover { color: var(--dpb-text-2); }
+  .bubble.act .foot .spacer { flex: 1; }
+  .bubble.act .foot .btn {
+    appearance: none; cursor: pointer; flex: none;
+    border-radius: var(--dpb-r-ctl); font-size: 11.5px; height: 26px; padding: 0 14px;
+  }
+  .bubble.act .foot .btn.ghost {
+    color: var(--dpb-text-2); border: 1px solid var(--dpb-border-strong);
+    background: var(--dpb-surface);
+  }
+  .bubble.act .foot .btn.ghost:hover { color: var(--dpb-text); }
+  .bubble.act .foot .btn.pri {
+    border: 0; color: var(--dpb-on-primary); font-weight: 500;
+    background: var(--dpb-primary);
+  }
+  .bubble.act .foot .btn.pri:hover { filter: brightness(1.06); }
+  .bubble.act .foot .btn.pri.disabled { opacity: 0.45; cursor: default; }

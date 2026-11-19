@@ -1,0 +1,317 @@
+{
+  "note": "Inputs for readStatus / deriveViewModel parity. Loader applies the legacy defaults.",
+  "cases": {
+    "idle": {
+      "statuses": {},
+      "rows": []
+    },
+    "working-by-row-flag": {
+      "statuses": {
+        "s1": {}
+      },
+      "rows": [
+        {
+          "id": "s1",
+          "running": true,
+          "displayTitle": "Fix login bug"
+        }
+      ]
+    },
+    "working-todo-truncated": {
+      "statuses": {
+        "s1": {
+          "running": true
+        }
+      },
+      "rows": [
+        {
+          "id": "s1",
+          "projectionValues": {
+            "todos": [
+              {
+                "status": "in_progress",
+                "content": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "waiting-approval": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "s1",
+            "displayReason": "Run rm -rf /tmp/x"
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1",
+          "displayTitle": "cleanup"
+        }
+      ]
+    },
+    "waiting-approval-toolname-fallback": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "s1",
+            "toolName": "Bash"
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "waiting-question-single-options": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "question",
+            "sessionId": "s1",
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Which database?",
+                "multiSelect": false,
+                "options": [
+                  {
+                    "label": "Postgres (recommended)",
+                    "description": "relational"
+                  },
+                  {
+                    "label": "MySQL"
+                  },
+                  {
+                    "label": ""
+                  },
+                  {
+                    "label": "SQLite"
+                  },
+                  {
+                    "label": "Redis"
+                  },
+                  {
+                    "label": "Mongo"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "waiting-question-multi": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "question",
+            "sessionId": "s1",
+            "questions": [
+              {
+                "id": "q1",
+                "question": "Pick features",
+                "multiSelect": true,
+                "options": [
+                  {
+                    "label": "A"
+                  },
+                  {
+                    "label": "B"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "waiting-question-batch": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "question",
+            "sessionId": "s1",
+            "questions": [
+              {
+                "id": "q1",
+                "question": "one"
+              },
+              {
+                "id": "q2",
+                "question": "two"
+              }
+            ]
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "waiting-question-empty": {
+      "statuses": {
+        "s1": {
+          "pendingInteraction": {
+            "kind": "question",
+            "sessionId": "s1",
+            "questions": []
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "done": {
+      "statuses": {
+        "s1": {
+          "completionUnread": true
+        }
+      },
+      "rows": [
+        {
+          "id": "s1"
+        }
+      ]
+    },
+    "done-in-main-view": {
+      "statuses": {
+        "s1": {
+          "completionUnread": true
+        }
+      },
+      "rows": [
+        {
+          "id": "s1",
+          "retainedBy": {
+            "mainView": 1
+          }
+        }
+      ]
+    },
+    "subagent-jumps-to-parent": {
+      "statuses": {
+        "sub-1": {
+          "running": true
+        }
+      },
+      "rows": [
+        {
+          "id": "sub-1",
+          "origin": "subagent",
+          "parentId": "p1"
+        }
+      ]
+    },
+    "subagent-pending-session-kept": {
+      "statuses": {
+        "sub-1": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "sub-1",
+            "toolName": "Bash"
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "sub-1",
+          "origin": "subagent",
+          "parentId": "p1"
+        }
+      ]
+    },
+    "priority-waiting-over-working-over-done": {
+      "statuses": {
+        "w1": {
+          "running": true
+        },
+        "w2": {
+          "completionUnread": true
+        },
+        "w3": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "w3",
+            "toolName": "Bash"
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "w1"
+        },
+        {
+          "id": "w2"
+        },
+        {
+          "id": "w3"
+        }
+      ]
+    },
+    "sort-main-view-first": {
+      "statuses": {
+        "a": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "a",
+            "toolName": "Bash"
+          }
+        },
+        "b": {
+          "pendingInteraction": {
+            "kind": "approval",
+            "sessionId": "b",
+            "toolName": "Bash"
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "a"
+        },
+        {
+          "id": "b",
+          "retainedBy": {
+            "mainView": 1
+          }
+        }
+      ]
+    },
+    "blank-rows-ignored": {
+      "statuses": {
+        "s1": {
+          "running": true
+        }
+      },
+      "rows": [
+        {
+          "id": "s1",
+          "blank": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-11-18",
+  "note": "Ratchet: counts may only go down. Update deliberately with --update.",
+  "patterns": {
+    "catSvg64": 1,
+    "catSvg96": 1,
+    "segPrimitive": 0,
+    "buttonPrimitive": 0,
+    "cardPrimitive": 0,
+    "hexColors": 31,
+    "rgbaColors": 15,
+    "functionsOver60": 3
+  },
+  "longFunctions": [
+    "openFloatWindow:90",
+    "route:101",
+    "DeskPet:112"
+  ]
+}

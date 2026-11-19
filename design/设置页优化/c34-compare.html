@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>C3 vs C4</title>
+<style>
+  body { margin: 0; padding: 24px; width: 1290px; box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #f5f6f7; color: #1b1d21; }
+  h1 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  p.sub { font-size: 11.5px; color: #6b7280; margin: 0 0 18px; }
+  figure { margin: 0 0 20px; }
+  .shot { border: 1px solid rgba(0,0,0,.08); border-radius: 10px; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 1240px; height: auto; }
+  figcaption { display: flex; align-items: baseline; gap: 8px; margin: 8px 0 0; }
+  figcaption b { font-size: 12px; }
+  figcaption span { font-size: 10.5px; color: #6b7280; }
+</style>
+</head>
+<body>
+  <h1>C3 → C4：从"上下拼接"改成"同一场景"</h1>
+  <p class="sub">同一视口、同一份数据。C3 是舞台 + 底部切换带两个区块；C4 让舞台本身就是 3D 切换场景。</p>
+  <figure>
+    <div class="shot"><img src="screens/c3-light.png" alt="C3"></div>
+    <figcaption><b>C3</b><span>舞台（宠物 + 动作条）+ 底部一条 3D 切换带：两个区块上下拼</span></figcaption>
+  </figure>
+  <figure>
+    <div class="shot"><img src="screens/c4-light.png" alt="C4"></div>
+    <figcaption><b>C4</b><span>宠物们站在同一地面上，选中者在中央放大、两侧按透视后退；拖动即切换</span></figcaption>
+  </figure>
+</body>
+</html>

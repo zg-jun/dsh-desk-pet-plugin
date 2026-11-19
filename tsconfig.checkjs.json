@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "checkJs": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitOverride": false
+  },
+  "include": [
+    "src/host/**/*.js",
+    "src/index.js",
+    "src/scene/screen/renderer.js",
+    "src/scene/screen/globals.d.ts"
+  ]
+}

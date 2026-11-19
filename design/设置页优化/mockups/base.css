@@ -1,0 +1,205 @@
+/* 设计稿外壳：复刻 DSH 主界面（侧栏 + 页面）与设计令牌。
+   令牌取值来自运行中的 DSH：dsh-client-ui-theme/design-platform.css */
+
+body {
+  --dsw-static-neutral-bluish-00: rgb(255, 255, 255);
+  --dsw-static-neutral-bluish-50: rgb(249, 250, 251);
+  --dsw-static-neutral-bluish-55: rgb(245, 247, 250);
+  --dsw-static-neutral-bluish-60: rgb(245, 246, 247);
+  --dsw-static-neutral-bluish-75: rgb(241, 243, 245);
+  --dsw-static-neutral-bluish-90: rgb(237, 240, 244);
+  --dsw-static-neutral-bluish-100: rgb(235, 238, 242);
+  --dsw-static-neutral-bluish-150: rgb(233, 236, 242);
+  --dsw-static-neutral-bluish-200: rgb(225, 229, 238);
+  --dsw-static-neutral-bluish-300: rgb(207, 211, 214);
+  --dsw-static-neutral-bluish-400: rgb(173, 178, 184);
+  --dsw-static-neutral-bluish-500: rgb(151, 157, 166);
+  --dsw-static-neutral-bluish-600: rgb(129, 133, 140);
+  --dsw-static-neutral-bluish-700: rgb(97, 102, 107);
+  --dsw-static-neutral-bluish-750: rgb(67, 69, 74);
+  --dsw-static-neutral-bluish-800: rgb(53, 54, 56);
+  --dsw-static-neutral-bluish-850: rgb(44, 44, 46);
+  --dsw-static-neutral-bluish-875: rgb(35, 35, 36);
+  --dsw-static-neutral-bluish-900: rgb(27, 27, 28);
+  --dsw-static-neutral-bluish-950: rgb(21, 21, 23);
+  --dsw-static-neutral-bluish-1000: rgb(15, 17, 21);
+  --dsw-static-deepseek-100: rgb(228, 237, 253);
+  --dsw-static-deepseek-400: rgb(122, 170, 255);
+  --dsw-static-deepseek-450: rgb(86, 134, 254);
+  --dsw-static-deepseek-500: rgb(65, 118, 230);
+  --dsw-static-deepseek-50: rgb(237, 243, 254);
+  --dsw-static-green-500: rgb(34, 197, 94);
+  --dsw-static-amber-500: rgb(245, 158, 11);
+  --dsw-static-red-400: rgb(242, 90, 90);
+  --dsw-static-red-600: rgb(236, 19, 19);
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-overlay: var(--dsw-static-neutral-bluish-150);
+  --dsw-alias-border-l1: rgba(0, 0, 0, 0.04);
+  --dsw-alias-border-l2: rgba(0, 0, 0, 0.1);
+  --dsw-alias-border-l3: rgba(0, 0, 0, 0.12);
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-idle-primary: var(--dsw-static-neutral-300);
+  --dsw-alias-interactive-bg-hover: rgba(38, 49, 72, 0.06);
+  --dsw-alias-interactive-bg-active: rgba(38, 49, 72, 0.1);
+  --dsw-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-specific-sidebar-nav-item-active: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+}
+
+body[data-ds-dark-theme] {
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-950);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-875);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-850);
+  --dsw-alias-bg-overlay: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-border-l1: rgba(255, 255, 255, 0.06);
+  --dsw-alias-border-l2: rgba(255, 255, 255, 0.12);
+  --dsw-alias-border-l3: rgba(255, 255, 255, 0.16);
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-300);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-state-idle-primary: var(--dsw-static-neutral-600);
+  --dsw-alias-interactive-bg-hover: rgba(255, 255, 255, 0.08);
+  --dsw-alias-interactive-bg-active: rgba(255, 255, 255, 0.14);
+  --dsw-specific-sidebar-fill: var(--dsw-static-neutral-bluish-900);
+  --dsw-specific-sidebar-nav-item-active: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-link: var(--dsw-static-deepseek-400);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+    "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-bg-base);
+  width: 1240px;
+  height: 820px;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.app { display: flex; height: 820px; }
+
+/* ---------- 侧栏（仅用于给设置页提供真实的视觉语境） ---------- */
+.sb {
+  width: 232px; flex: none; height: 100%;
+  background: var(--dsw-specific-sidebar-fill);
+  border-right: 1px solid var(--dsw-alias-border-l1);
+  display: flex; flex-direction: column;
+  padding: 0 10px 12px;
+}
+.sb-lights { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 8px; }
+.sb-lights i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+.sb-lights i:nth-child(1) { background: #ff5f57; }
+.sb-lights i:nth-child(2) { background: #febc2e; }
+.sb-lights i:nth-child(3) { background: #28c840; }
+.sb-new {
+  height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 10px; font-size: 12.5px; font-weight: 500;
+  background: var(--dsw-alias-bg-base);
+  border: 1px solid var(--dsw-alias-border-l2);
+  box-shadow: 0 1px 2px rgba(16, 16, 24, 0.04);
+  margin: 6px 2px 14px;
+}
+.sb-new span:last-child { color: var(--dsw-alias-label-caption); font-size: 11px; }
+.sb-label {
+  font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--dsw-alias-label-caption); padding: 8px 10px 6px; font-weight: 500;
+}
+.sb-item {
+  height: 30px; border-radius: 8px; display: flex; align-items: center; gap: 8px;
+  padding: 0 10px; font-size: 12.5px; color: var(--dsw-alias-label-secondary);
+}
+.sb-item .ico { width: 16px; text-align: center; font-size: 12px; opacity: 0.8; }
+.sb-item.active {
+  background: var(--dsw-specific-sidebar-nav-item-active);
+  color: var(--dsw-alias-label-primary); font-weight: 500;
+}
+.sb-item.active .ico { opacity: 1; }
+.sb-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; padding: 8px 10px; font-size: 11.5px; color: var(--dsw-alias-label-caption); }
+.sb-foot .av { width: 22px; height: 22px; border-radius: 50%; background: var(--dsw-static-deepseek-100); }
+
+/* ---------- 主区 ---------- */
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--dsw-alias-bg-base); }
+.scroll { flex: 1; min-height: 0; overflow: hidden; }
+.page-topbar {
+  flex: none; height: 52px; display: flex; align-items: center;
+  padding: 0 28px; border-bottom: 1px solid var(--dsw-alias-border-l1);
+}
+.page-topbar h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+
+/* 设计稿标注（仅在对比图里用） */
+.tag {
+  position: fixed; right: 16px; bottom: 14px; z-index: 99;
+  font-size: 10.5px; letter-spacing: 0.04em; color: var(--dsw-alias-label-caption);
+  background: var(--dsw-alias-bg-base); border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 999px; padding: 3px 10px;
+}
+
+/* ---------- 3D 轮播（三版共用） ----------
+   参数由 carousel.js 驱动：rotate 12° / depth 20px / scale 0.05 / opacity ≥ 0.86。
+   卡片只保留「缩略图 + 名称」两行，倾斜时不糊字；选中用 1.5px 内描边。 */
+.dpp-stripwrap { position: relative; }
+/* 右侧渐隐：提示"还有更多"，同时柔化被裁切的卡片 */
+.dpp-stripwrap::after {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 34px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--dp-fade-bg, var(--dsw-alias-bg-base)));
+}
+.dpp-strip {
+  position: relative; display: flex; gap: 12px; overflow-x: auto;
+  --dp-card-span: 128px;
+  padding: 10px calc(50% - 58px);
+  perspective: 1000px; perspective-origin: 50% 46%;
+  transform-style: preserve-3d; overscroll-behavior-x: contain;
+  scrollbar-width: none; -ms-overflow-style: none;
+  cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+}
+.dpp-strip::-webkit-scrollbar { display: none; }
+.dpp-strip.dragging { cursor: grabbing; }
+.dpp-pet {
+  position: relative; flex: none; width: 116px; height: 104px; padding: 8px 6px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 0; border-radius: 12px; text-align: center; color: inherit; font: inherit;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 4%, transparent);
+  cursor: pointer; backface-visibility: hidden; will-change: transform, opacity;
+  transition: background 0.12s ease;
+}
+.dpp-pet:hover { background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent); }
+.dpp-pet.active { background: transparent; box-shadow: inset 0 0 0 1.5px var(--dsw-alias-label-primary); }
+.dpp-pet:focus-visible { outline: 2px solid color-mix(in srgb, var(--dsw-alias-label-primary) 45%, transparent); outline-offset: 2px; }
+.dpp-pet .thumb { height: 56px; display: flex; align-items: center; justify-content: center; }
+.dpp-pet .thumb img { width: 48px; height: 52px; object-fit: contain; display: block; }
+.dpp-pet .thumb .emoji { font-size: 26px; line-height: 1; }
+.dpp-pet .nm {
+  margin-top: 4px; max-width: 100%; font-size: 11.5px; line-height: 1.35;
+  color: var(--dsw-alias-label-secondary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.dpp-pet.active .nm { color: var(--dsw-alias-label-primary); font-weight: 600; }
+.dpp-pet .x {
+  position: absolute; top: 5px; right: 5px; width: 16px; height: 16px; padding: 0;
+  border: 0; border-radius: 50%; background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-secondary); font: inherit; font-size: 9px; line-height: 16px;
+  text-align: center; cursor: pointer; opacity: 0;
+  box-shadow: 0 1px 2px rgba(16, 16, 24, 0.14);
+  transition: opacity 0.12s ease;
+}
+/* 当前卡常显一个移除入口（触屏可用），其余卡片 hover / 聚焦时出现 */
+.dpp-pet.active .x { opacity: 0.55; }
+.dpp-pet:hover .x, .dpp-pet:focus-within .x { opacity: 1; }

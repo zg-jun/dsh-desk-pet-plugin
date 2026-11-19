@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>3D 轮播 · 参数验证</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  body { width: 760px; height: 300px; overflow: hidden; }
+  .demo { width: 620px; margin: 34px auto 0; }
+  .cap { font-size: 11.5px; color: var(--dsw-alias-label-tertiary); margin: 0 0 6px; }
+  .note { font-size: 11.5px; color: var(--dsw-alias-label-secondary); margin: 14px 0 0; }
+  .note code { font: 10.5px ui-monospace, Menlo, monospace; color: var(--dsw-alias-label-tertiary); }
+</style>
+</head>
+<body>
+<script>if(new URLSearchParams(location.search).get("theme")==="dark")document.body.setAttribute("data-ds-dark-theme","");</script>
+<div class="demo">
+  <p class="cap">优化后的 3D 轮播（当前选中卡居中，可拖动 / 滚轮 / ← →）</p>
+  <div class="dpp-stripwrap">
+    <div class="dpp-strip" role="group" aria-label="宠物池">
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <span class="thumb"><span class="emoji">🐱</span></span>
+        <span class="nm">内置小猫</span>
+      </div>
+      <div class="dpp-pet active" role="button" tabindex="0" aria-pressed="true">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/huidou.png" alt=""></span>
+        <span class="nm">灰豆</span>
+      </div>
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/lulu-capybara-2.png" alt=""></span>
+        <span class="nm">噜噜</span>
+      </div>
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/line-dog.png" alt=""></span>
+        <span class="nm">线条小狗</span>
+      </div>
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/shinchan-4.png" alt=""></span>
+        <span class="nm">小新</span>
+      </div>
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/g1.png" alt=""></span>
+        <span class="nm">G1</span>
+      </div>
+      <div class="dpp-pet" role="button" tabindex="0" aria-pressed="false">
+        <button class="x" type="button" aria-label="移除">✕</button>
+        <span class="thumb"><img src="../assets/lumei.png" alt=""></span>
+        <span class="nm">噜妹</span>
+      </div>
+    </div>
+  </div>
+  <p class="note">参数：<code>rotate 16° · depth 28px · scale 0.95 · opacity ≥ 0.88 · perspective 1000px</code>；松手磁性吸附到最近一张。</p>
+</div>
+<script src="carousel.js"></script>
+</body>
+</html>

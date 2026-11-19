@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>弹框家族 · 全部状态</title>
+<style>
+  body { margin: 0; padding: 26px; width: 2400px; box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #f5f6f7; color: #1b1d21; }
+  h1 { font-size: 16px; font-weight: 600; margin: 0 0 4px; }
+  p.sub { font-size: 11.5px; color: #6b7280; margin: 0 0 20px; }
+  h2 { font-size: 12px; font-weight: 600; margin: 22px 0 10px; color: #4b5563; letter-spacing: .02em; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  figure { margin: 0; }
+  .shot { border: 1px solid rgba(0,0,0,.08); border-radius: 8px; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 10.5px; color: #6b7280; margin-top: 5px; }
+  figcaption b { color: #1b1d21; font-weight: 600; }
+</style>
+</head>
+<body>
+  <h1>弹框家族 · 6 个状态 × 浅/深色</h1>
+  <p class="sub">添加抽屉 3 个状态 + 运行时环境 3 个状态（移除不再二次确认）；全部基于 C6 页面与同一套令牌。</p>
+
+  <h2>浅色</h2>
+  <div class="grid">
+    <figure><div class="shot"><img src="screens/dialogs-drawer-light.png" alt=""></div><figcaption><b>添加抽屉</b> · 搜索 / 结果 / 预览</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-drawer-installing-light.png" alt=""></div><figcaption><b>安装中</b> · 行内进度：右侧百分比 + 行底进度条</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-drawer-empty-light.png" alt=""></div><figcaption><b>无结果</b> · 空态 + 打开站点</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-missing-light.png" alt=""></div><figcaption><b>运行时缺失</b> · 居中：logo / 文案 / 按钮</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-progress-light.png" alt=""></div><figcaption><b>运行中</b> · 进度 + 取消下载</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-failed-light.png" alt=""></div><figcaption><b>安装失败</b> · 重试 / 取消</figcaption></figure>
+  </div>
+
+  <h2>深色</h2>
+  <div class="grid">
+    <figure><div class="shot"><img src="screens/dialogs-drawer-dark.png" alt=""></div><figcaption><b>添加抽屉</b> · 搜索 / 结果 / 预览</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-drawer-installing-dark.png" alt=""></div><figcaption><b>安装中</b> · 行内进度：右侧百分比 + 行底进度条</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-drawer-empty-dark.png" alt=""></div><figcaption><b>无结果</b> · 空态 + 打开站点</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-missing-dark.png" alt=""></div><figcaption><b>运行时缺失</b> · 居中：logo / 文案 / 按钮</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-progress-dark.png" alt=""></div><figcaption><b>运行中</b> · 进度 + 取消下载</figcaption></figure>
+    <figure><div class="shot"><img src="screens/dialogs-runtime-failed-dark.png" alt=""></div><figcaption><b>安装失败</b> · 重试 / 取消</figcaption></figure>
+  </div>
+</body>
+</html>
